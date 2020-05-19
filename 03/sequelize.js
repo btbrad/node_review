@@ -14,16 +14,21 @@
     name: {type: Sequelize.STRING(20), allowNull: false},
     price: {type: Sequelize.FLOAT, allowNull: false},
     stock: {type: Sequelize.INTEGER, defaultValue: 0}
+  }, {
+    timestamps: false
   })
 
   // 同步数据库
-  let ret = await Fruit.sync()
-  console.log(ret)
+  let ret = await Fruit.sync({force: true})
+  // console.log(ret)
 
-  ret = await Fruit.create({
-    name: '香蕉',
-    price: 3.5
-  })
-  console.log(ret)
+  // ret = await Fruit.create({
+  //   name: '香蕉',
+  //   price: 3.5
+  // })
+  // console.log(ret)
+
+  ret = await Fruit.findAll()
+  console.log(JSON.stringify(ret))
 
 })()
