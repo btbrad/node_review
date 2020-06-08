@@ -1,0 +1,63 @@
+<!--
+ * @Author: btbrad
+ * @Date: 2020-06-08 22:51:21
+ * @LastEditors: btbrad
+ * @LastEditTime: 2020-06-08 23:47:53
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <label for="username">用户</label><input type="text" name="username" id="username"> <br>
+  <label for="username">密码</label><input type="password" name="password" id="password"> <br>
+  <button id="reg">注册</button>
+  <button id="login">登录</button>
+
+  <script>
+    $(function () {
+      $('#reg').on('click', () => {
+        $.ajax({
+          url: '/reg',
+          dataType: 'json',
+          data: {
+            username: $('#username').val(),
+            password: $('#password').val()
+          },
+          success: (res) => {
+
+            alert(res.msg)
+          },
+          error: (err) => {
+            alert(err.msg)
+          }
+        })
+      })
+      $('#login').on('click', () => {
+        $.ajax({
+          url: '/login',
+          dataType: 'json',
+          data: {
+            username: $('#username').val(),
+            password: $('#password').val()
+          },
+          success: (res) => {
+            alert(res.msg)
+          },
+          error: (err) => {
+            alert(err.msg)
+          }
+        })
+      })
+    })
+  </script>
+</body>
+
+</html>
