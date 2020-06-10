@@ -1,0 +1,45 @@
+<!--
+ * @Author: btbrad
+ * @Date: 2020-06-10 20:24:44
+ * @LastEditors: btbrad
+ * @LastEditTime: 2020-06-10 20:30:11
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="btn">ajax</button>
+
+  <script>
+    window.onload = () => {
+      let oBtn = document.querySelector('#btn')
+
+      oBtn.addEventListener('click', () => {
+        let xhr = new XMLHttpRequest()
+        xhr.open('get', 'http://localhost:8080')
+        xhr.send()
+
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+              alert('成功')
+              let json = JSON.parse(xhr.responseText)
+              console.log(json)
+            } else {
+              alert('失败')
+            }
+          }
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>
