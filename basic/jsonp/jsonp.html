@@ -1,0 +1,43 @@
+<!--
+ * @Author: btbrad
+ * @Date: 2020-06-11 22:16:49
+ * @LastEditors: btbrad
+ * @LastEditTime: 2020-06-11 22:27:19
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    function getData(data) {
+      console.log(data)
+    }
+
+    window.onload = () => {
+      let oTxt = document.querySelector('#txt1')
+      oTxt.addEventListener('input', () => {
+        let url =
+          `https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=31729,1438,31670,21112,32045,31271,31715,30824,26350&req=2&csor=1&wd=${oTxt.value}&cb=getData`
+        console.log(url)
+        let oS = document.createElement('script')
+        oS.src = url
+
+        document.head.appendChild(oS)
+      })
+    }
+  </script>
+</head>
+
+<body>
+
+  <input type="text" id="txt1">
+
+</body>
+
+</html>
+
+https://www.baidu.com/sugrec?wd=aa&cb=getData

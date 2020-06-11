@@ -1,0 +1,44 @@
+<!--
+ * @Author: btbrad
+ * @Date: 2020-06-11 21:21:21
+ * @LastEditors: btbrad
+ * @LastEditTime: 2020-06-11 21:49:17
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <button id="btn1">读取</button>
+  <img id="img1" />
+
+  <script>
+    window.onload = function () {
+      let oImg = document.querySelector('#img1')
+      let oBtn = document.querySelector('#btn1')
+
+      oBtn.addEventListener('click', async () => {
+        // 1.请求
+        let res = await fetch('data/1.jpg')
+        // 2.解析
+        let data = await res.blob()
+        let url = URL.createObjectURL(data)
+
+        console.log(url)
+
+        oImg.src = url
+      })
+
+    }
+  </script>
+
+</body>
+
+</html>
