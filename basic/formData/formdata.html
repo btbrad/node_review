@@ -1,0 +1,49 @@
+<!--
+ * @Author: btbrad
+ * @Date: 2020-06-13 22:23:22
+ * @LastEditors: btbrad
+ * @LastEditTime: 2020-06-15 22:40:10
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <form action="http://localhost:8080/" method="post" id="form1">
+      <label for="user">用户:</label
+      ><input type="text" name="username" id="user" /> <br />
+      <label for="pass">密码:</label
+      ><input type="password" name="password" id="pass" /> <br />
+      <label for="file">文件:</label
+      ><input type="file" name="file1" id="file" /> <br />
+      <input type="submit" value="提交" />
+    </form>
+
+    <script>
+      let oForm = document.querySelector('#form1')
+
+      oForm.onsubmit = function (e) {
+        let formData = new FormData(oForm)
+
+        let xhr = new XMLHttpRequest()
+
+        xhr.open(oForm.method, oForm.action, true)
+
+        xhr.send(formData)
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            alert('成功')
+          }
+        }
+
+        e.preventDefault()
+      }
+    </script>
+  </body>
+</html>
