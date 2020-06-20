@@ -1,0 +1,33 @@
+<!--
+ * @Author: btbrad
+ * @Date: 2020-06-20 21:23:17
+ * @LastEditors: btbrad
+ * @LastEditTime: 2020-06-20 21:54:46
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/socket.io@2.3.0/lib/socket.min.js"></script> -->
+</head>
+
+<body>
+
+  <div id="timer"></div>
+
+  <script>
+    let sock = io.connect('ws://localhost:8080/')
+
+    sock.emit('add', 10, 8)
+    sock.on('timer', time => {
+      document.querySelector('#timer').innerHTML = new Date(time).toLocaleString()
+    })
+  </script>
+</body>
+
+</html>
