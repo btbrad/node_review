@@ -2,45 +2,61 @@
  * @Author: btbrad
  * @Date: 2020-06-23 23:16:39
  * @LastEditors: btbrad
- * @LastEditTime: 2020-06-23 23:54:26
+ * @LastEditTime: 2020-06-24 21:53:40
  * @Description: 
 -->
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+  <body>
+    <p>用户: <input type="text" name="username" id="username" /> <br /></p>
+    <p>密码: <input type="password" name="password" id="password" /> <br /></p>
+    <button id="regBtn">注册</button>
+    <button id="loginBtn">登录</button>
 
-<body>
-  <p>用户: <input type="text" name="username" id="username"> <br /></p>
-  <p>密码: <input type="password" name="password" id="password"> <br /></p>
-  <button id="regBtn">注册</button>
-  <button id="loginBtn">登录</button>
+    <script>
+      window.onload = () => {
+        let regBtn = document.querySelector('#regBtn')
+        let loginBtn = document.querySelector('#loginBtn')
 
-  <script>
-    window.onload = () => {
-      let regBtn = document.querySelector('#regBtn')
-      let loginBtn = document.querySelector('#loginBtn')
-
-
-      regBtn.addEventListener('click', () => {
-        let username = document.querySelector('#username').value
-        let password = document.querySelector('#password').value
-        let xhr = new XMLHttpRequest()
-        xhr.open('GET', `/reg?username=${username}&password=${password}`)
-        xhr.send()
-        xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.responseText)
+        regBtn.addEventListener('click', () => {
+          let username = document.querySelector('#username').value
+          let password = document.querySelector('#password').value
+          let xhr = new XMLHttpRequest()
+          xhr.open('GET', `/reg?username=${username}&password=${password}`)
+          xhr.send()
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              console.log(xhr.responseText)
+            }
           }
-        }
-      })
-    }
-  </script>
+        })
 
-</body>
-
+        loginBtn.addEventListener('click', () => {
+          let username = document.querySelector('#username').value
+          let password = document.querySelector('#password').value
+          let xhr = new XMLHttpRequest()
+          // xhr.open('POST', `/login`)
+          // xhr.setRequestHeader(
+          //   'Content-Type',
+          //   'application/x-www-form-urlencoded'
+          // )
+          // let params = `username=${username}&password=${password}`
+          // xhr.send(params)
+          xhr.open('GET', `/login?username=${username}&password=${password}`)
+          xhr.send()
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              console.log(xhr.responseText)
+            }
+          }
+        })
+      }
+    </script>
+  </body>
 </html>
