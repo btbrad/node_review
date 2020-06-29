@@ -9,6 +9,10 @@ const router = require('./router')
 
 http
   .createServer((req, res) => {
+    res.writeJson = (json) => {
+      res.setHeader('content-type', 'application/json')
+      res.write(JSON.stringify(json))
+    }
     // 处理请求
     async function handle(method, url, get, post, files) {
       let fn = router.findRouter(method, url)
