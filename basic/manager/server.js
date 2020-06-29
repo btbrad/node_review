@@ -19,7 +19,7 @@ addRouter('get', '/list', async (res, get, post, files) => {
   }
   res.end()
 })
-addRouter('get', '/add', async (res, get, post, files) => {
+addRouter('post', '/add', async (res, get, post, files) => {
   let { title, price, count } = post
   if (!title || !price || !count) {
     res.writeJson({
@@ -60,6 +60,19 @@ addRouter('get', '/add', async (res, get, post, files) => {
   res.end()
 })
 addRouter('get', '/del', async (res, get, post, files) => {
-  res.write('aaaaaaaaaaaaaaaa')
+  let { id } = get
+  try {
+    let data = await db.query('delete from item_table where id=?', id)
+    res.writeJson({
+      error: 0,
+      data,
+    })
+  } catch (e) {
+    console.log(`database error:${e}`)
+    res.writeJson({
+      error: 1,
+      msg: 'database error',
+    })
+  }
   res.end()
 })

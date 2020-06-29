@@ -52,18 +52,21 @@ http
     let { pathname, query } = url.parse(req.url, true)
 
     if (req.method === 'POST') {
+      console.log(pathname)
       if (
         req.headers['content-type'].startsWith(
           'application/x-www-form-urlencoded'
         )
       ) {
+        console.log('普通post')
         // 普通POST
         let arr = []
-        res.on('data', (buffer) => {
+        req.on('data', (buffer) => {
           arr.push(buffer)
         })
-        res.on(end, () => {
+        req.on('end', () => {
           let post = querystring.parse(Buffer.concat(arr).toString())
+          console.log(post)
           // 找路由
           handle(req.method, req.url, query, post, {})
         })
@@ -97,7 +100,7 @@ http
     } else {
       // GET
       // 找路由
-      handle(req.method, req.url, query, {}, {})
+      handle(req.method, pathname, query, {}, {})
     }
   })
   .listen(HTTP_PORT, () => {
