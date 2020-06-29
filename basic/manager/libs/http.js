@@ -7,17 +7,43 @@ const { Form } = require('multiparty')
 const { HTTP_PORT, HTTP_ROOT, HTTP_UPLOAD } = require('../config')
 const router = require('./router')
 
-function handle(method, url, query, post, files) {
-  let fn = router.findRouter(method, url)
-  if (!fn) {
-    // 文件
-  } else {
-    // 接口
-  }
-}
-
 http
   .createServer((req, res) => {
+    // 处理请求
+    async function handle(method, url, get, post, files) {
+      let fn = router.findRouter(method, url)
+      console.log(fn)
+      if (!fn) {
+        // 文件
+        let filepath = HTTP_ROOT + pathname
+        fs.stat(filepath, (err, stat) => {
+          if (err) {
+            res.writeHeader(404)
+            res.write('NOT FOUND')
+            res.end()
+          } else {
+            let rs = fs.createReadStream(filepath)
+            rs.on('error', () => {
+              console.log('fs read stream error')
+            })
+            let gz = zlib.createGzip()
+            res.setHeader('content-encoding', 'gzip')
+            rs.pipe(gz).pipe(res)
+          }
+        })
+      } else {
+        // 接口
+        try {
+          await fn(res, get, post, files)
+        } catch (e) {
+          console.log(e)
+          res.writeHeader(500)
+          res.write('Internal Server Error')
+          res.end()
+        }
+      }
+    }
+
     // 1.解析数据
     let { pathname, query } = url.parse(req.url, true)
 
@@ -35,7 +61,7 @@ http
         res.on(end, () => {
           let post = querystring.parse(Buffer.concat(arr).toString())
           // 找路由
-          handle(method, url, query, post, {})
+          handle(req.method, req.url, query, post, {})
         })
       } else {
         // 文件POST
@@ -61,15 +87,15 @@ http
 
         form.on('close', () => {
           // 找路由
-          handle(method, url, query, post, files)
+          handle(req.method, req.url, query, post, files)
         })
       }
     } else {
       // GET
       // 找路由
-      handle(method, url, query, {}, {})
+      handle(req.method, req.url, query, {}, {})
     }
   })
   .listen(HTTP_PORT, () => {
-    console.log(`server is running at http:localhost${HTTP_PORT}`)
+    console.log(`server is running at http:localhost:${HTTP_PORT}`)
   })

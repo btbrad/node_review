@@ -6,12 +6,14 @@ function addRouter(method, url, fn) {
 
   if (!router[method]) {
     router[method] = {}
+    router[method][url] = fn
   } else {
     router[method][url] = fn
   }
 }
 
-function findRouter() {
+function findRouter(method, url) {
+  console.log(method, url, router)
   method = method.toLowerCase()
   url = url.toLowerCase()
 

@@ -1,7 +1,9 @@
 const config = require('./config')
 const db = require('./libs/database')
+const http = require('./libs/http')
+const { addRouter } = require('./libs/router')
 
-;(async () => {
-  let res = await db.query('SELECT * FROM item_table')
-  console.log(res)
-})()
+addRouter('get', '/aaa', async (res, get, post, files) => {
+  res.write('aaaaaaaaaaaaaaaa')
+  res.end()
+})
