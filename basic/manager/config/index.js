@@ -1,6 +1,6 @@
 const process = require('process')
 
-let mode = process.env.OS === 'Windows_NT' ? 'dev' : 'prod'
+let mode = process.argv[2] === '--dev' ? 'dev' : 'prod'
 
 module.exports = {
   mode,
