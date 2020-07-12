@@ -1,9 +1,13 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const multer = require('multer')
 const app = express()
 const PORT = 3000
 
+let obj = multer({ dest: './static/upload' })
+
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(obj.any())
 
 // 处理get请求
 app.get('/a', (req, res, next) => {
@@ -21,6 +25,11 @@ app.get('/a', (req, res, next) => {
 app.post('/b', (req, res, next) => {
   console.log(req.body) // 获取post的body数据
   res.send('bbb')
+})
+
+// 处理上传文件
+app.post('/upload', (req, res, next) => {
+  console.log('上传文件', req.files)
 })
 
 // 设置静态资源目录 一定要写在接口的后面 static自带中间件
