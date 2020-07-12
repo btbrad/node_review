@@ -1,6 +1,9 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express()
 const PORT = 3000
+
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // 处理get请求
 app.get('/a', (req, res, next) => {
@@ -14,7 +17,9 @@ app.get('/a', (req, res, next) => {
   console.log('bbb')
 })
 
+// 处理post请求 使用body-parser
 app.post('/b', (req, res, next) => {
+  console.log(req.body) // 获取post的body数据
   res.send('bbb')
 })
 
