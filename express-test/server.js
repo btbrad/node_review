@@ -30,6 +30,7 @@ app.post('/b', (req, res, next) => {
 // 处理上传文件
 app.post('/upload', (req, res, next) => {
   console.log('上传文件', req.files)
+  res.send('上传完成')
 })
 
 // 设置静态资源目录 一定要写在接口的后面 static自带中间件
