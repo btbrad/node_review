@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const multer = require('multer')
+const cookieParser = require('cookie-parser')
 const app = express()
 const PORT = 3000
 
@@ -8,6 +9,7 @@ let obj = multer({ dest: './static/upload' })
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(obj.any())
+app.use(cookieParser())
 
 // 处理get请求
 app.get('/a', (req, res, next) => {
@@ -31,6 +33,15 @@ app.post('/b', (req, res, next) => {
 app.post('/upload', (req, res, next) => {
   console.log('上传文件', req.files)
   res.send('上传完成')
+})
+
+// 处理cookie
+app.get('/c', (req, res, next) => {
+  console.log(req.cookies)
+  res.cookie('b', '123456', {
+    maxAge: 14 * 60 * 60 * 60 * 1000,
+  })
+  res.send('ok')
 })
 
 // 设置静态资源目录 一定要写在接口的后面 static自带中间件
