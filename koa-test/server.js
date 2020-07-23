@@ -25,6 +25,11 @@ router.get('/login', async (ctx) => {
   ctx.body = '成功'
 })
 
+router.get('/test', async ctx => {
+  // ctx.state = 404
+  ctx.redirect('/login')
+})
+
 app.listen(3000, () => {
   console.log('server running at http://localhost:3000')
 })
