@@ -1,13 +1,14 @@
 const Koa = require('koa')
 const router = require('./router')
+const static = require('koa-static')
 
 const app = new Koa()
 
 app.use(router.routes())
 
-app.use(async (ctx) => {
-  ctx.body = 'Hello World'
-})
+// app.use(async (ctx) => {
+//   ctx.body = 'Hello World'
+// })
 
 router.get('/a', async (ctx) => {
   ctx.body = 'aaa'
@@ -25,10 +26,17 @@ router.get('/login', async (ctx) => {
   ctx.body = '成功'
 })
 
-router.get('/test', async ctx => {
+router.get('/test', async (ctx) => {
   // ctx.state = 404
   ctx.redirect('/login')
 })
+
+app.use(
+  static('./static', {
+    maxAge: 3600 * 24 * 7,
+    index: '1.html',
+  })
+)
 
 app.listen(3000, () => {
   console.log('server running at http://localhost:3000')
